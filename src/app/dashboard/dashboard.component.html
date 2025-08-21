@@ -1,0 +1,95 @@
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h2>Dashboard</h2>
+      <div *ngIf="loading" class="alert alert-info">
+        <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+        Loading dashboard data...
+      </div>
+    </div>
+  </div>
+  
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total Users</h5>
+          <h2>{{ dashboardData?.totalUsers || 0 }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <h5 class="card-title">Currently Online</h5>
+          <h2>{{ dashboardData?.activeUsers || 0 }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <h5 class="card-title">Active Sessions</h5>
+          <h2>{{ dashboardData?.activeSessions || 0 }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-warning text-white">
+        <div class="card-body">
+          <h5 class="card-title">Processed Items</h5>
+          <h2>{{ dashboardData?.processedData?.length || 0 }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Debug Info Section -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Debug Info</h5>
+        </div>
+        <div class="card-body">
+          <small class="text-muted">Last Updated: {{ getCurrentDate() | date:'MMM d, y, h:mm:ss a' }}</small>
+          <pre class="mt-2">Data: {{ dashboardData | json }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Recent Processed Data</h5>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Processed At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dashboardData?.processedData">
+                <td>{{ item.id }}</td>
+                <td>{{ item.type }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusClass(item.status)">
+                    {{ item.status }}
+                  </span>
+                </td>
+                <td>{{ item.processedAt | date:'short' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

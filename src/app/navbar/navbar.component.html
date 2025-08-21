@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Serverless App</a>
+    
+    <div class="navbar-nav ms-auto" *ngIf="currentUser">
+      <span class="navbar-text me-3">
+        Welcome, {{ currentUser.firstName }}!
+      </span>
+      <button class="btn btn-outline-light" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,51 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-center">Login</h3>
+        </div>
+        <div class="card-body">
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                formControlName="email" 
+                [class.is-invalid]="email?.invalid && email?.touched">
+              <div *ngIf="email?.invalid && email?.touched" class="invalid-feedback">
+                <div *ngIf="email?.errors?.['required']">Email is required</div>
+                <div *ngIf="email?.errors?.['email']">Please enter a valid email</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                formControlName="password" 
+                [class.is-invalid]="password?.invalid && password?.touched">
+              <div *ngIf="password?.invalid && password?.touched" class="invalid-feedback">
+                <div *ngIf="password?.errors?.['required']">Password is required</div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              <span *ngIf="isLoading">Logging in...</span>
+              <span *ngIf="!isLoading">Login</span>
+            </button>
+          </form>
+          <div class="text-center mt-3">
+            <a routerLink="/register">Don't have an account? Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

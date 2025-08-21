@@ -1,0 +1,37 @@
+<div class="users-container">
+  <h2>Registered Users</h2>
+  
+  <button class="btn btn-secondary mb-3" (click)="refreshUsers()" [disabled]="isLoading">
+    <span *ngIf="isLoading">Loading...</span>
+    <span *ngIf="!isLoading">Refresh</span>
+  </button>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="text-center">
+    <p>Loading users...</p>
+  </div>
+
+  <table *ngIf="!isLoading && users.length > 0" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Registration Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.createdAt | date:'medium' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && users.length === 0" class="text-center">
+    <p>No users registered yet.</p>
+  </div>
+</div>
