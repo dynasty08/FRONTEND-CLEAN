@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo Installing dependencies...
+      - ls -la
+      - cd FrontEndAngular
+      - npm install
+
+  build:
+    commands:
+      - echo Building the frontend...
+      - cd FrontEndAngular
+      - npm run build -- --configuration production
+      - echo Build completed
+
+  post_build:
+    commands:
+      - echo Deploying to S3...
+      - aws s3 sync FrontEndAngular/dist/front-end-angular/browser/ s3://${S3_BUCKET_NAME} --delete
+      - echo Frontend deployed successfully
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: FrontEndAngular/dist/front-end-angular/browser
