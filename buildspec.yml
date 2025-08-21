@@ -14,14 +14,17 @@ phases:
     commands:
       - echo Building Angular app...
       - npm run build -- --configuration=production
+      - echo Checking build output...
+      - ls -la dist/
+      - find dist/ -type d
 
   post_build:
     commands:
       - echo Deploying to S3...
-      - aws s3 sync dist/FrontEndAngular/browser/ s3://${S3_BUCKET_NAME} --delete
+      - aws s3 sync dist/FrontEndAngular/ s3://${S3_BUCKET_NAME} --delete
 
 artifacts:
   files:
     - '**/*'
-  base-directory: dist/FrontEndAngular/browser
+  base-directory: dist/FrontEndAngular
   discard-paths: no
