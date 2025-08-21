@@ -12,15 +12,17 @@ phases:
     commands:
       - echo Building the frontend...
       - npm run build -- --configuration production
-      - echo Build completed
+      - echo Build completed, checking output...
+      - ls -la dist/
+      - find dist/ -type d -name "*" | head -10
 
   post_build:
     commands:
       - echo Deploying to S3...
-      - aws s3 sync dist/front-end-angular/browser/ s3://${S3_BUCKET_NAME} --delete
+      - aws s3 sync dist/FrontEndAngular/browser/ s3://${S3_BUCKET_NAME} --delete
       - echo Frontend deployed successfully
 
 artifacts:
   files:
     - '**/*'
-  base-directory: dist/front-end-angular/browser
+  base-directory: dist/FrontEndAngular/browser
